@@ -34,6 +34,7 @@ footer, header, hgroup, menu, nav, section {
 }
 * {
     box-sizing: border-box;
+	font-family: 'Kalam', cursive;
 }
 body {
 	line-height: 1;

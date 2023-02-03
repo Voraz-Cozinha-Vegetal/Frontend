@@ -45,16 +45,16 @@ const NavBarConatiner = styled.div`
     width: 60%;
     height: 150px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     font-size: 23px;
-    font-weight: 400;
+    font-weight: 700;
     
 
     & img {
         cursor: pointer;
         width: 200px;
-        margin: 0px 20px 20px 20px;
+        margin: 0px 0px 20px 0px;
     }
 `
 const NavBarText = styled.h1`
