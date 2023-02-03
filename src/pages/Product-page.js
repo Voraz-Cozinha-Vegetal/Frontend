@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import styled from "styled-components";
 import { NavBar } from "../components/commons/NavBar-component";
@@ -9,14 +9,17 @@ export default function ProductPage() {
     const [product, setProduct] = useState({});
     const { productId } = useParams();
 
-    appService.getProduct(productId)
+    useEffect(() => {
+        appService.getProduct(productId)
         .then((res) => {
             setProduct(res.data);
-            console.log(res.data);
         })
         .catch((res) => {
             alert(res.message);
         })
+    }, [setProduct, productId]);
+
+    
 
     return (
         <>

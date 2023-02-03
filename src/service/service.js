@@ -14,10 +14,15 @@ function postCart(body, config) {
     return axios.post(`${API}/cart`, body, config);
 }
 
+function getUserCart(config) {
+    return axios.get(`${API}/cart`, config);
+}
+
 const appService = {
     getProducts,
     getProduct,
     postCart,
+    getUserCart,
 }
 
 export default appService;

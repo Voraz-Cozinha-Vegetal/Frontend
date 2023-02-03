@@ -1,10 +1,27 @@
 import styled from "styled-components"
 import logo from "../../assets/logo.png";
 import { HiOutlineShoppingBag } from "react-icons/hi"
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import AppContext from "../../contexts/app-context";
+import { useNavigate } from "react-router-dom";
+import appService from "../../service/service";
 
 export function NavBar () {
     const [hover, setHover] = useState(false);
+    const { userData, userCart, setUserCart, refresh } = useContext(AppContext);
+    const navigate = useNavigate();
+    const token = { headers: { Authorization: `Bearer ${userData.token}` } }; //mudar depois
+
+    useEffect(() => {
+        appService.getUserCart(token)
+            .then((res) => {
+                setUserCart(res.data);
+            })
+            .catch((res) => {
+                alert(res.response.data.message)
+            })
+    }, [refresh, setUserCart])
+
     return (
         <NavBarWrapper>
             <NavBarConatiner>
@@ -17,7 +34,7 @@ export function NavBar () {
                     onMouseEnter={() => setHover(true)}
                     onMouseLeave={() => setHover(false)}
                 >
-                    <HiOutlineShoppingBag
+                    <HiOutlineShoppingBag onClick={() => navigate("/cart")}
                         style={{
                             color: hover ? "#FFFFFF" : "#000000",
                             cursor: "pointer",
@@ -25,7 +42,7 @@ export function NavBar () {
                         }}
                         size={30}
                     />
-                    <h2>(0)</h2>
+                    <h2 onClick={() => navigate("/cart")}>{`(${userCart.length})`}</h2>
                 </CartWrapper>
                <NavBarText>CADASTRO</NavBarText>
                <NavBarText>LOGIN</NavBarText>

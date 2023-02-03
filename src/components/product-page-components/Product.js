@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components"
+import AppContext from "../../contexts/app-context";
+import appService from "../../service/service";
 
 export default function Product({ id, name, image, description, price}) {
+    const { userData, userCart, setUserCart, refresh, setRefresh } = useContext(AppContext); //mudar depois
     const [quantity, setQuantity] = useState(1);
+    const navigate = useNavigate();
 
     function increment() {
         setQuantity(quantity + 1);
@@ -21,7 +26,19 @@ export default function Product({ id, name, image, description, price}) {
             quantity: Number(quantity),
         }
 
-        return body;
+        const token = { headers: { Authorization: `Bearer ${userData.token}` } } //MUDAR DEPOIS
+
+        appService.postCart(body, token)
+            .then((res) => {
+                setUserCart([
+                    ...userCart,
+                    res.data,
+                ]);
+                setRefresh(!refresh)
+            })
+            .catch((res) => {
+                alert(res.response.data.message);
+            })
     }
 
     return (
@@ -43,6 +60,7 @@ export default function Product({ id, name, image, description, price}) {
                         <QuantityButtons onClick={decrement}>-</QuantityButtons>
                     </div>    
                     <Button size="normal" onClick={() => addToCart(quantity)}>Adicionar ao Carrinho</Button>
+                    <Button size="normal" onClick={() => navigate("/cart")}>Ir para o Carrinho</Button>
                 </DivDisplayColumn>
             </ProductInfoContainer>
         </>
@@ -127,6 +145,7 @@ const Button = styled.button`
     font-size: 25px;
     cursor: pointer;
     border: 1px solid #000000;
+    margin-bottom: 5px;
 
     :hover {
         background-color: #FFFFFF;
