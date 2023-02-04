@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components"
 import AppContext from "../../contexts/app-context";
 import appService from "../../service/service";
+import { Button } from "../../styles/Button";
 
-export default function Product({ id, name, image, description, price}) {
+export default function Product({ id, name, image, description, price, stock }) {
     const { userData, userCart, setUserCart, refresh, setRefresh } = useContext(AppContext); //mudar depois
     const [quantity, setQuantity] = useState(1);
     const navigate = useNavigate();
@@ -54,12 +55,17 @@ export default function Product({ id, name, image, description, price}) {
                     <h3>{description}</h3>
                 </DivDisplayColumn>
                 <DivDisplayColumn>
-                    <div>
-                        <h2>{`Quantidade: ${quantity}x`}</h2>
-                        <QuantityButtons onClick={increment}>+</QuantityButtons>
-                        <QuantityButtons onClick={decrement}>-</QuantityButtons>
-                    </div>    
-                    <Button size="normal" onClick={() => addToCart(quantity)}>Adicionar ao Carrinho</Button>
+                    {stock === 0 ? 
+                        <h2>Produto indisponível</h2> 
+                        : 
+                        <div>
+                            <h2>{`Quantidade: ${quantity}x`}</h2>
+                            <QuantityButtons onClick={increment}>+</QuantityButtons>
+                            <QuantityButtons onClick={decrement}>-</QuantityButtons>
+                        </div>   
+                    }
+                    
+                    <Button disabled={stock === 0 ? true : false} size="normal" onClick={() => addToCart(quantity)}>Adicionar ao Carrinho</Button>
                     <Button size="normal" onClick={() => navigate("/cart")}>Ir para o Carrinho</Button>
                 </DivDisplayColumn>
             </ProductInfoContainer>
@@ -125,27 +131,6 @@ const QuantityButtons = styled.div`
     background-color: #000000;
     padding-top: 3px;
     cursor: pointer;
-
-    :hover {
-        background-color: #FFFFFF;
-        color: #000000;
-    }
-`
-
-const Button = styled.button`
-    width: ${props => props.size === "normal" ? "300px" : "50px"};
-    height: 70px;
-    border: none;
-    outline: none;
-    background-color: #000000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #FFFFFF;
-    font-size: 25px;
-    cursor: pointer;
-    border: 1px solid #000000;
-    margin-bottom: 5px;
 
     :hover {
         background-color: #FFFFFF;

@@ -33,6 +33,7 @@ export default function ProductPage() {
                             image={product.image}
                             description={product.description}
                             price={(product.price/100).toFixed(2)}
+                            stock={product.stock}
                         /> 
                         : 
                         <></>

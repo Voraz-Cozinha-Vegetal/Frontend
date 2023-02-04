@@ -33,6 +33,7 @@ export function HomePage () {
                             name={value.name}
                             image={value.image}
                             price={(value.price/100).toFixed(2)}
+                            stock={value.stock}
                         />
                     )) 
                     : 

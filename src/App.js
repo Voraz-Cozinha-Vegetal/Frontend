@@ -2,6 +2,7 @@ import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AppContext from "./contexts/app-context";
 import PrivatePage from "./decorator/Private-page";
+import AddressPage from "./pages/Address-page";
 import { HomePage } from "./pages/Home-page";
 import ProductPage from "./pages/Product-page";
 import UserCartPage from "./pages/User-cart-page";
@@ -14,6 +15,7 @@ export default function App() {
   const [refresh, setRefresh] = useState(false);
   const [userCart, setUserCart] = useState([]);
   const PrivateUserCart = <PrivatePage> <UserCartPage/> </PrivatePage>
+  const PrivateUserAddress = <PrivatePage> <AddressPage/> </PrivatePage>
   
   return (
     <BrowserRouter>
@@ -34,6 +36,7 @@ export default function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/product/:productId" element={<ProductPage />} />
             <Route path="/cart" element={PrivateUserCart} />
+            <Route path="/address" element={PrivateUserAddress}/>
           </Routes>
         </AppContext.Provider>
     </BrowserRouter>

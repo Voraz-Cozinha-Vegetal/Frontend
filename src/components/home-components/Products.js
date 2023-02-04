@@ -1,14 +1,14 @@
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 
-export default function Products ({ id, name, image, price }) {
+export default function Products ({ id, name, image, price, stock }) {
     const navigate = useNavigate()
 
     return (
         <ProductWrapper onClick={() => navigate(`/product/${id}`)}>
             <img src={image} alt={name} />
             <h1>{name}</h1>
-            <h2>R${price}</h2>
+            {stock === 0 ? <h2>Produto indiponível</h2> : <h2>R${price}</h2>}
         </ProductWrapper>
     )
 }
@@ -27,7 +27,7 @@ const ProductWrapper = styled.div`
 
     h1 {
         font-size: 25px;
-        font-weight: 400;
+        font-weight: 700;
         margin: 8px 0px 8px 0px;
     }
 

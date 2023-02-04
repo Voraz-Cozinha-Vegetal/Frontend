@@ -18,11 +18,16 @@ function getUserCart(config) {
     return axios.get(`${API}/cart`, config);
 }
 
+function deleteCartItem(params, config) {
+    return axios.delete(`${API}/cart/${params}`, config);
+}
+
 const appService = {
     getProducts,
     getProduct,
     postCart,
     getUserCart,
+    deleteCartItem,
 }
 
 export default appService;

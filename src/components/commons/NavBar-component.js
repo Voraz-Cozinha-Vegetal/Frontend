@@ -28,7 +28,7 @@ export function NavBar () {
                <NavBarText>A EMPRESA</NavBarText>
                <NavBarText>A CHEF</NavBarText>
                <NavBarText>CONTATO</NavBarText>
-               <img src={logo} alt="Voraz Cozinha Vegetal"></img>
+               <img onClick={() => navigate("/")} src={logo} alt="Voraz Cozinha Vegetal"></img>
                 <CartWrapper
                     hover={hover} 
                     onMouseEnter={() => setHover(true)}
@@ -56,6 +56,7 @@ const NavBarWrapper = styled.div`
     display: flex;
     justify-content: center;
     background-color: #FAE057;
+    box-shadow: 0px 5px 5px 3px rgba(0, 0, 0, 0.2);
 `
 
 const NavBarConatiner = styled.div`

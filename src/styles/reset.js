@@ -25,6 +25,7 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	font-family: 'Kalam', cursive;
+	text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
