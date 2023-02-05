@@ -22,12 +22,27 @@ function deleteCartItem(params, config) {
     return axios.delete(`${API}/cart/${params}`, config);
 }
 
+function postUserAddress(body, config) {
+    return axios.post(`${API}/address`, body, config);
+}
+
+function editUserAddress(body, config) {
+    return axios.put(`${API}/address`, body, config);
+}
+
+function getUserAddress(config) {
+    return axios.get(`${API}/address`, config);
+}
+
 const appService = {
     getProducts,
     getProduct,
     postCart,
     getUserCart,
     deleteCartItem,
+    postUserAddress,
+    editUserAddress,
+    getUserAddress,
 }
 
 export default appService;
