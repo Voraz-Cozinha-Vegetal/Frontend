@@ -16,9 +16,9 @@ export const Button = styled.button`
     margin-bottom: 5px;
 
     :hover {
-        background-color: #FAE057;
+        background-color: ${props => props.color ? "#FFFFFF" : "#FAE057"};
+        border: 1px solid ${props => props.color ? "#000000" : "none"};
         color: #000000;
-        border: none;
     }
 
     :disabled {

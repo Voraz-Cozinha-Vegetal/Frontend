@@ -5,15 +5,17 @@ import PrivatePage from "./decorator/Private-page";
 import AddressPage from "./pages/Address-page";
 import { HomePage } from "./pages/Home-page";
 import ProductPage from "./pages/Product-page";
+import SignInPage from "./pages/Sign-in-page";
+import SignUpPage from "./pages/Sign-up-page";
 import UserCartPage from "./pages/User-cart-page";
 import GlobalStyle from "./styles/reset";
 import { getUserData } from "./utils/local-storage";
 
 export default function App() {
   const [userData, setUserData] = useState(getUserData());
-  const [config, setConfig] = useState(null);
+  const [config, setConfig] = useState({ headers: { Authorization: `Bearer ${getUserData()?.token}` } });
   const [refresh, setRefresh] = useState(false);
-  const [userCart, setUserCart] = useState([]);
+  const [userCart, setUserCart] = useState(null);
   const PrivateUserCart = <PrivatePage> <UserCartPage/> </PrivatePage>
   const PrivateUserAddress = <PrivatePage> <AddressPage/> </PrivatePage>
   
@@ -34,6 +36,8 @@ export default function App() {
         >
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/sign-up" element={<SignUpPage />} />
+            <Route path="/sign-in" element={<SignInPage />} />
             <Route path="/product/:productId" element={<ProductPage />} />
             <Route path="/cart" element={PrivateUserCart} />
             <Route path="/address" element={PrivateUserAddress}/>

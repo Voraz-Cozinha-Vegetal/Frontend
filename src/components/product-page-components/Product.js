@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components"
 import AppContext from "../../contexts/app-context";
 import appService from "../../service/service";
-import { Button } from "../../styles/Button";
+import { Button } from "../../styles/commons/Button";
 
 export default function Product({ id, name, image, description, price, stock }) {
-    const { userData, userCart, setUserCart, refresh, setRefresh } = useContext(AppContext); //mudar depois
+    const { config, userCart, setUserCart, refresh, setRefresh } = useContext(AppContext);
     const [quantity, setQuantity] = useState(1);
     const navigate = useNavigate();
 
@@ -27,9 +27,7 @@ export default function Product({ id, name, image, description, price, stock }) 
             quantity: Number(quantity),
         }
 
-        const token = { headers: { Authorization: `Bearer ${userData.token}` } } //MUDAR DEPOIS
-
-        appService.postCart(body, token)
+        appService.postCart(body, config)
             .then((res) => {
                 setUserCart([
                     ...userCart,
@@ -39,6 +37,7 @@ export default function Product({ id, name, image, description, price, stock }) 
             })
             .catch((res) => {
                 alert(res.response.data.message);
+                navigate("/sign-in");
             })
     }
 

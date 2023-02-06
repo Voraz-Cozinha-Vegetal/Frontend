@@ -11,9 +11,8 @@ export default function PrivatePage({ children }) {
 
   useEffect(() => {
     if (!data) {
-      if (window.confirm("Por Favor, faça o login para continuar")) {
-        navigate("/");
-      }
+      navigate("/sign-in");
+      
     } else if (!userData || !config) {
       setUserData(data);
       setConfig({ headers: { Authorization: `Bearer ${data.token}` } });

@@ -34,6 +34,14 @@ function getUserAddress(config) {
     return axios.get(`${API}/address`, config);
 }
 
+function postSignUp(body) {
+    return axios.post(`${API}/sign-up`, body);
+}
+
+function postSignIn(body) {
+    return axios.post(`${API}/sign-in`, body);
+}
+
 const appService = {
     getProducts,
     getProduct,
@@ -43,6 +51,8 @@ const appService = {
     postUserAddress,
     editUserAddress,
     getUserAddress,
+    postSignUp,
+    postSignIn,
 }
 
 export default appService;

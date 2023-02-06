@@ -8,44 +8,59 @@ import appService from "../../service/service";
 
 export function NavBar () {
     const [hover, setHover] = useState(false);
-    const { userData, userCart, setUserCart, refresh } = useContext(AppContext);
+    const { config, userCart, setUserCart, refresh } = useContext(AppContext);
     const navigate = useNavigate();
-    const token = { headers: { Authorization: `Bearer ${userData.token}` } }; //mudar depois
 
     useEffect(() => {
-        appService.getUserCart(token)
+        appService.getUserCart(config)
             .then((res) => {
                 setUserCart(res.data);
             })
             .catch((res) => {
-                alert(res.response.data.message)
+                
             })
-    }, [refresh, setUserCart])
+    }, [refresh, setUserCart, config])
+
+    function LogOut() {
+        if(window.confirm("Tem certeza que deseja sair da sua conta?"))
+        localStorage.clear();
+        window.location.reload();
+    }
 
     return (
         <NavBarWrapper>
             <NavBarConatiner>
-               <NavBarText>A EMPRESA</NavBarText>
-               <NavBarText>A CHEF</NavBarText>
-               <NavBarText>CONTATO</NavBarText>
-               <img onClick={() => navigate("/")} src={logo} alt="Voraz Cozinha Vegetal"></img>
-                <CartWrapper
-                    hover={hover} 
-                    onMouseEnter={() => setHover(true)}
-                    onMouseLeave={() => setHover(false)}
-                >
-                    <HiOutlineShoppingBag onClick={() => navigate("/cart")}
-                        style={{
-                            color: hover ? "#FFFFFF" : "#000000",
-                            cursor: "pointer",
-                            margin: "0px 0px 8px 0px",
-                        }}
-                        size={30}
-                    />
-                    <h2 onClick={() => navigate("/cart")}>{`(${userCart.length})`}</h2>
-                </CartWrapper>
-               <NavBarText>CADASTRO</NavBarText>
-               <NavBarText>LOGIN</NavBarText>
+                <img onClick={() => navigate("/")} src={logo} alt="Voraz Cozinha Vegetal"></img>
+                <NavBarText>A EMPRESA</NavBarText>
+                <NavBarText>A CHEF</NavBarText>
+                <NavBarText>CONTATO</NavBarText>
+                {!userCart ?
+                    <>
+                        <NavBarText onClick={() => navigate("/sign-up")}>CADASTRO</NavBarText>
+                        <NavBarText onClick={() => navigate("/sign-in")}>LOGIN</NavBarText>
+                    </>
+                    :
+                    <>
+                        <CartWrapper
+                            hover={hover} 
+                            onMouseEnter={() => setHover(true)}
+                            onMouseLeave={() => setHover(false)}
+                        >
+                            <HiOutlineShoppingBag onClick={() => navigate("/cart")}
+                                style={{
+                                    color: hover ? "#FFFFFF" : "#000000",
+                                    cursor: "pointer",
+                                    margin: "0px 0px 8px 0px",
+                                }}
+                                size={30}
+                            />
+                            <h2 onClick={() => navigate("/cart")}>{`(${userCart.length})`}</h2>
+                        </CartWrapper>
+                        <NavBarText onClick={LogOut}>LOGOUT</NavBarText>
+                    </>
+                }
+               
+               
             </NavBarConatiner>
         </NavBarWrapper>
     )
@@ -60,7 +75,8 @@ const NavBarWrapper = styled.div`
 `
 
 const NavBarConatiner = styled.div`
-    width: 60%;
+    width: 100%;
+    max-width: 1110px;
     height: 150px;
     display: flex;
     justify-content: space-between;

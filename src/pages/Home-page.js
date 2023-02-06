@@ -4,6 +4,7 @@ import banner from "../assets/banner.jpg";
 import { useEffect, useState } from "react";
 import appService from "../service/service";
 import Products from "../components/home-components/Products";
+import Footer from "../components/commons/Footer.-component";
 
 
 export function HomePage () {
@@ -24,7 +25,7 @@ export function HomePage () {
             <NavBar/>
             <Banner src={banner} alt="Banner"></Banner>
             <ProductsWrapper>
-                <Slogan>Seja Voraz!</Slogan>
+                <Slogan>Aproveite nossos produtos. Seja Voraz!</Slogan>
                 <ProductsContainer>
                     {products.length ? products.map((value, index) => (
                         <Products 
@@ -41,6 +42,7 @@ export function HomePage () {
                     }
                 </ProductsContainer>
             </ProductsWrapper>
+            <Footer />
         </div>
     )
 }
@@ -68,7 +70,7 @@ const ProductsContainer = styled.div`
 `
 
 const Slogan = styled.div`
-    font-size: 90px;
+    font-size: 60px;
     font-weight: 700;
     margin: 60px 0px 60px 0px;
 `

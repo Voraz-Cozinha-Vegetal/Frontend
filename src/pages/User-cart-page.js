@@ -5,12 +5,11 @@ import ProductCartCard from "../components/cart-components/Product-cart-card";
 import { NavBar } from "../components/commons/NavBar-component";
 import AppContext from "../contexts/app-context";
 import appService from "../service/service";
-import { Button } from "../styles/Button";
+import { Button } from "../styles/commons/Button";
 
 export default function UserCartPage() {
-    const { userData, userCart, setUserCart, refresh } = useContext(AppContext);
+    const { config, userCart, setUserCart, refresh } = useContext(AppContext);
     const navigate = useNavigate();
-    const token = { headers: { Authorization: `Bearer ${userData.token}` } }; //mudar depois
 
     const totalPerProduct = userCart.map((value) => (
         ((value.Product.price/100) * value.quantity)
@@ -21,14 +20,14 @@ export default function UserCartPage() {
       ).toFixed(2);
 
     useEffect(() => {
-        appService.getUserCart(token)
+        appService.getUserCart(config)
             .then((res) => {
                 setUserCart(res.data);
             })
             .catch((res) => {
                 alert(res.response.data.message)
             })
-    }, [refresh, setUserCart]);
+    }, [refresh, setUserCart, config]);
 
     return (
         <>
@@ -50,11 +49,18 @@ export default function UserCartPage() {
                     :
                     <h6>{`O seu carrinho está vazio :(`}</h6>
                     }
-                    <CartTotal>
-                        <h5>Total:</h5>
-                        <h5>{`R$${total}`}</h5>
-                    </CartTotal>
-                    <Button size="large" onClick={() => navigate("/address")}>Seguir para endereço de entrega</Button>
+                    {userCart.length > 0 ? 
+                        <>
+                            <CartTotal>
+                                <h5>Total:</h5>
+                                <h5>{`R$${total}`}</h5>
+                            </CartTotal>
+                            <Button size="large" onClick={() => navigate("/address")}>Seguir para endereço de entrega</Button>
+                        </>
+                        :
+                        <></>
+                    }
+                    
                 </CartContainer>
             </CartWrapper>
         </>

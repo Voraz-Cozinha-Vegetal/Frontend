@@ -3,7 +3,10 @@ import styled from "styled-components";
 import { NavBar } from "../components/commons/NavBar-component";
 import AppContext from "../contexts/app-context";
 import appService from "../service/service";
-import { Button } from "../styles/Button";
+import { Button } from "../styles/commons/Button";
+import { FormContainer } from "../styles/commons/FormContainer";
+import { Form } from "../styles/commons/Form";
+import { Margin } from "../styles/commons/Margin";
 
 export default function AddressPage() {
     const state = "RJ"
@@ -14,13 +17,12 @@ export default function AddressPage() {
     const [complement, setComplement] = useState(null);
     const [disabledInput, setDisabledInput] = useState(false);
     const [refreshAddress, setRefreshAddress] = useState(false);
-    const [userAddress, setUserAddress] = useState({});
-    const { userData } = useContext(AppContext);
-    const token = { headers: { Authorization: `Bearer ${userData.token}` } } //MUDAR DEPOIS
+    const [userAddress, setUserAddress] = useState(null);
+    const { config } = useContext(AppContext);
 
     useEffect(() => {
 
-        appService.getUserAddress(token)
+        appService.getUserAddress(config)
             .then((res) => {
                 if(res.data) {
                     setUserAddress(res.data);
@@ -30,11 +32,11 @@ export default function AddressPage() {
                     setComplement(res.data.complement);
                 }
             })
-            .catch((res) => {
-                alert(res.response.data.message)
+            .catch(() => {
+
             })
 
-    }, [refreshAddress])
+    }, [refreshAddress, config])
 
     function createAddress(e) {
         e.preventDefault();
@@ -49,7 +51,7 @@ export default function AddressPage() {
             complement
         }
 
-        appService.postUserAddress(body, token)
+        appService.postUserAddress(body, config)
             .then((res) => {
                 setRefreshAddress(!refreshAddress);
                 setDisabledInput(false);
@@ -74,11 +76,10 @@ export default function AddressPage() {
             complement
         }
 
-        appService.editUserAddress(body, token)
+        appService.editUserAddress(body, config)
             .then((res) => {
                 setRefreshAddress(!refreshAddress);
                 setDisabledInput(false);
-                console.log("SUCESSO");
             })
             .catch((res) => {
                 alert(res) //mudar depois
@@ -152,9 +153,9 @@ export default function AddressPage() {
                             onChange={(e) => setComplement(e.target.value)}
                         ></input>
 
-                        <Last></Last>
+                        <Margin></Margin>
                         <Button size="large">Salvar endereço de entrega</Button>
-                        <Last></Last>
+                        <Margin></Margin>
                     </Form>	
                 </FormContainer>
             </FormWrapper>
@@ -176,42 +177,4 @@ const FormWrapper = styled.div`
     }
 `;
 
-const FormContainer = styled.div`
-    width: 100%;
-    max-width: 1110px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`;
 
-const Form = styled.form`
-    display: flex;
-    flex-direction: column;
-    width: 800px;
-
-    input {
-        height: 50px;
-        width: 100%;
-        border: none;
-        font-size: 25px;
-        border-bottom: 2px solid grey;
-    }
-
-    input:disabled {
-        background-color: lightgrey;
-    }
-
-    label {
-        font-size: 30px;
-        margin-top: 30px;
-    }
-
-    h2 {
-        font-size: 18px;
-        color: red;
-    }
-`;
-
-const Last = styled.div`
-    margin-bottom: 70px;
-`;

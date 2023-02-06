@@ -6,14 +6,12 @@ import appService from "../../service/service";
 
 export default function ProductCartCard({ id, name, image, price, quantity, cardTotal}) {
     const [hover, setHover] = useState(false);
-    const { userData, refresh, setRefresh } = useContext(AppContext);
+    const { config, refresh, setRefresh } = useContext(AppContext);
     
 
     function deleteItem() {
 
-        const token = { headers: { Authorization: `Bearer ${userData.token}` } } //MUDAR DEPOIS
-
-        appService.deleteCartItem(id, token)
+        appService.deleteCartItem(id, config)
             .then(() => {
                 setRefresh(!refresh)
             })
