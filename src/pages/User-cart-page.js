@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ProductCartCard from "../components/cart-components/Product-cart-card";
+import Footer from "../components/commons/Footer.-component";
 import { NavBar } from "../components/commons/NavBar-component";
 import AppContext from "../contexts/app-context";
 import appService from "../service/service";
@@ -63,6 +64,7 @@ export default function UserCartPage() {
                     
                 </CartContainer>
             </CartWrapper>
+            <Footer />
         </>
     )
 }
@@ -86,6 +88,7 @@ const CartContainer = styled.div`
         font-size: 50px;
         font-weight: 700;
         margin-top: 250px;
+        margin-bottom: 200px;
         text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3); //mudar depois
     }
 `;

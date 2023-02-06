@@ -7,6 +7,7 @@ import { Button } from "../styles/commons/Button";
 import { FormContainer } from "../styles/commons/FormContainer";
 import { Form } from "../styles/commons/Form";
 import { Margin } from "../styles/commons/Margin";
+import Footer from "../components/commons/Footer.-component";
 
 export default function AddressPage() {
     const state = "RJ"
@@ -159,7 +160,7 @@ export default function AddressPage() {
                     </Form>	
                 </FormContainer>
             </FormWrapper>
-            
+            <Footer />
 			
         </>
     );

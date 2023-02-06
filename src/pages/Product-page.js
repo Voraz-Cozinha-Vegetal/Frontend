@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import styled from "styled-components";
+import Footer from "../components/commons/Footer.-component";
 import { NavBar } from "../components/commons/NavBar-component";
 import Product from "../components/product-page-components/Product";
 import appService from "../service/service";
@@ -40,6 +41,7 @@ export default function ProductPage() {
                     }
                 </ProductContainer>
             </ProductWrapper>
+            <Footer />
         </>
     )
 }
