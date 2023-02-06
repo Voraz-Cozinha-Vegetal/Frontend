@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AppContext from "./contexts/app-context";
+import AdminPage from "./decorator/Admin-page";
 import PrivatePage from "./decorator/Private-page";
 import AddressPage from "./pages/Address-page";
+import AdminProductPage from "./pages/Admin-manage-products-page";
 import { HomePage } from "./pages/Home-page";
 import ProductPage from "./pages/Product-page";
 import SignInPage from "./pages/Sign-in-page";
@@ -18,6 +20,7 @@ export default function App() {
   const [userCart, setUserCart] = useState(null);
   const PrivateUserCart = <PrivatePage> <UserCartPage/> </PrivatePage>
   const PrivateUserAddress = <PrivatePage> <AddressPage/> </PrivatePage>
+  const PrivateAdminPage = <PrivatePage> <AdminPage> <AdminProductPage/> </AdminPage> </PrivatePage>
   
   return (
     <BrowserRouter>
@@ -40,7 +43,8 @@ export default function App() {
             <Route path="/sign-in" element={<SignInPage />} />
             <Route path="/product/:productId" element={<ProductPage />} />
             <Route path="/cart" element={PrivateUserCart} />
-            <Route path="/address" element={PrivateUserAddress}/>
+            <Route path="/address" element={PrivateUserAddress} />
+            <Route path="/admin" element={PrivateAdminPage} />
           </Routes>
         </AppContext.Provider>
     </BrowserRouter>

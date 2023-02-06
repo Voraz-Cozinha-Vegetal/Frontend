@@ -42,6 +42,10 @@ function postSignIn(body) {
     return axios.post(`${API}/sign-in`, body);
 }
 
+function getProductsAdmin(config) {
+    return axios.get(`${API}/products/admin`, config);
+}
+
 const appService = {
     getProducts,
     getProduct,
@@ -53,6 +57,7 @@ const appService = {
     getUserAddress,
     postSignUp,
     postSignIn,
+    getProductsAdmin,
 }
 
 export default appService;
